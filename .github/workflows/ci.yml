@@ -17,6 +17,6 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-      - run: pdocker build -t cart
+      - run:  docker build -t cart
         name: Docker Build
 
