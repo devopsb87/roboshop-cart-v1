@@ -1,5 +1,5 @@
 FROM             node:20-alpine
-RUN              useradd roboshop
+RUN              adduser -D roboshop
 RUN              mkdir /app
 USER             roboshop
 WORKDIR          /app
