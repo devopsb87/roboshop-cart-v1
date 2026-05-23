@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run a one-line script
         run: echo npm test
-        ## We will not have echo command in real world. Since this is a test application there are not test cases built.
+        ## We will not eecho command in real world. Since this is a test application there are not test cases built.
   docker:
     needs: test
     runs-on: self-hosted
