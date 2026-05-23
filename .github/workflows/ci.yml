@@ -18,7 +18,13 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-      - run: docker build -t cart .
-        name: Docker Build
+      - name: Docker login
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 624234316771.dkr.ecr.us-east-1.amazonaws.com
+      - name: docker build
+        run: docker build -t 624234316771.dkr.ecr.us-east-1.amazonaws.com/cart:latest .
+      - name: docker push
+        run: docker push 624234316771.dkr.ecr.us-east-1.amazonaws.com/cart:latest
+
+
 
 
