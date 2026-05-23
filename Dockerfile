@@ -1,4 +1,4 @@
-FROM             node:20
+FROM             node:20-alpine
 RUN              useradd roboshop
 RUN              mkdir /app
 USER             roboshop
