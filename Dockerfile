@@ -1,5 +1,5 @@
 FROM             node:20-slim
-RUN              useradd  roboshop
+RUN              useradd -d /app roboshop
 RUN              mkdir /app && chown roboshop:roboshop /app
 USER             roboshop
 WORKDIR          /app
