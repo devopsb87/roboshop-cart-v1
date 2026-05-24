@@ -25,6 +25,59 @@ jobs:
       - name: docker push
         run: docker push 624234316771.dkr.ecr.us-east-1.amazonaws.com/cart:latest
 
+  dev-deploy:
+    needs: docker
+    runs-on: self-hosted
+    environment: dev
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: raghudevopsb87/roboshop-helm-v1
+      - name: Get kubectl config
+        run: aws eks update-kubeconfig --name dev
+      - name: Helm deploy app
+        run: helm upgrade -i cart . -f dev-project-values/cart.yml
+
+  qa-deploy:
+    needs: dev-deploy
+    runs-on: self-hosted
+    environment: qa
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: raghudevopsb87/roboshop-helm-v1
+      - name: Get kubectl config
+        run: echo aws eks update-kubeconfig --name qa
+      - name: Helm deploy app
+        run: echo helm upgrade -i cart . -f qa-project-values/cart.yml
+
+
+  uat-deploy:
+    needs: qa-deploy
+    runs-on: self-hosted
+    environment: uat
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: raghudevopsb87/roboshop-helm-v1
+      - name: Get kubectl config
+        run: echo aws eks update-kubeconfig --name uat
+      - name: Helm deploy app
+        run: echo helm upgrade -i cart . -f uat-project-values/cart.yml
+
+  prod-deploy:
+    needs: uat-deploy
+    runs-on: self-hosted
+    environment: prod
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: raghudevopsb87/roboshop-helm-v1
+      - name: Get kubectl config
+        run: echo aws eks update-kubeconfig --name prod
+      - name: Helm deploy app
+        run: echo helm upgrade -i cart . -f prod-project-values/cart.yml
+
 
 
 
